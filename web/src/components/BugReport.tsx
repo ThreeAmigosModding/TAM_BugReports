@@ -170,7 +170,7 @@ const BugReport: React.FC = () => {
                                 <Button variant="filled" color="red.6" onClick={handleCancel}>
                                     Cancel
                                 </Button>
-                                <Button variant="filled" color="orange.5" type="submit">
+                                <Button variant="filled" color="green.5" type="submit">
                                     Submit
                                 </Button>
                             </Box>
