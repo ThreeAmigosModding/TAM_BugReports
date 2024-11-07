@@ -112,30 +112,36 @@ local function createDiscordMessage(data)
     })
 end
 
+--- Callback for sending the report.
+---@param source integer -- Player source
+---@param data dataProps -- The data to send over the report.
+---@return boolean|nil -- Return back to client.
 lib.callback.register("tam_bugReports:sendReport", function(source, data)
     if rateLimit then return false end
-
     if not data then return end
 
+    ---@diagnostic disable-next-line: param-type-mismatch
     data.identifier = GetPlayerIdentifierByType(source, Config.identifier) or "Unknown"
+    ---@diagnostic disable-next-line: assign-type-mismatch
+    data.timeStamp = os.date("%m/%d/%Y %X")
 
     if Config.discordEnabled then
         createDiscordMessage(data)
     end
+
     if Config.githubEnabled then
         createGitHubIssue(data)
     end
+
     if Config.loggerEnabled then
         lib.logger(source, 'TAM_BugReport', ("**Reported By**: %s | %s\n**Bug Description**: %s\n**Type**: %s\n**Severity**: %s\n**Expected Result**: %s\n**Actual Result**: %s\n**Steps to reproduce**: %s\n**Player Coords**: %s\n**Timestamp**: %s\n**In-game Time**: %s"):format(data.author, data.identifier, data.title, data.type, data.severity, data.expectedResult, data.actualResult, data.reproduce, data.coords, data.timeStamp, data.time))
     end
+
     rateLimit = true
+
     SetTimeout(Config.cooldown, function()
         rateLimit = false
     end)
 
     return true
-end)
-
-lib.callback.register("tam_bugReports:getTime", function(source)
-    return os.date("%m/%d/%Y %X")
 end)

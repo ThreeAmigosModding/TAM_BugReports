@@ -63,7 +63,7 @@ RegisterNUICallback('submit', function(data, cb)
         author = GetPlayerName(cache.playerId),
         identifier = "Unknown",
         coords = GetEntityCoords(cache.ped),
-        timeStamp = lib.callback.await('tam_bugReports:getTime', false),
+        timeStamp = "01/01/1999",
         time = getTime()
     }
 
