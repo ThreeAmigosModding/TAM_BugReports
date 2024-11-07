@@ -1,0 +1,12 @@
+---@class dataProps
+---@field title string The title of the issue
+---@field identifier string|integer The identifier of the player whom submitted the issue.
+---@field expectedResult string The expected result of the issue
+---@field actualResult string The actual result of the issue
+---@field reproduce string The steps to reproduce the issue
+---@field type string The type to assign to the issue.
+---@field severity string The severity to assign to the issue.
+---@field author string The author that submitted the issue
+---@field coords vector3 The authors coords in-game
+---@field time string The in-game time.
+---@field timeStamp string The server timestamp of when the report is submitted.

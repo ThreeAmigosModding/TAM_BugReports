@@ -1,0 +1,9 @@
+{
+    "notify_error_ratelimited": "You're sending reports too fast!",
+    "notify_success_sent_report": "Successfully sent in the bug report!",
+    "command_name": "bug",
+    "command_help": "Submit a bug report.",
+    "keybind_description": "Open bug report UI.",
+    "failed_issue": "Failed to create issue. Status Code: %s",
+    "failed_discord": "Failed to send Discord embed. Status code: %s"
+}
