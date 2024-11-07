@@ -14,7 +14,7 @@ local function loadConfig()
     if not Config then
         return false
     end
-    return true, lib.print.info("Successfully loaded config!")
+    return true
 end
 
 local function printConsoleMsg(fail, reason)
@@ -52,3 +52,5 @@ end
 if _ENV.LoadedResource then
     printConsoleMsg(false)
 end
+
+if lib.context == "SERVER" then lib.versionCheck('threeamigosmodding/TAM_BugReports') end

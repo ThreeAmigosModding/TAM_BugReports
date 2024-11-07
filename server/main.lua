@@ -9,8 +9,6 @@ local convars = {
     githubOrg = GetConvar("tamReports:githubOrg", "NO_ORG"),
     discordWebhook = GetConvar("tamReports:discordWebhook", "NO_WEBHOOK_URL"),
 }
-
-local config = require 'data.config'
 local rateLimit = false
 
 --- sends an issue to a specific github repository
@@ -101,8 +99,8 @@ local function createDiscordMessage(data)
 
     local payload = {
         embeds = {embed},
-        username = config.embedConfig.username,
-        avatar_url = config.embedConfig.logo
+        username = Config.embedConfig.username,
+        avatar_url = Config.embedConfig.logo
     }
 
     PerformHttpRequest(convars.discordWebhook, function(statusCode)
@@ -119,19 +117,19 @@ lib.callback.register("tam_bugReports:sendReport", function(source, data)
 
     if not data then return end
 
-    data.identifier = GetPlayerIdentifierByType(source, config.identifier) or "Unknown"
+    data.identifier = GetPlayerIdentifierByType(source, Config.identifier) or "Unknown"
 
-    if config.discordEnabled then
+    if Config.discordEnabled then
         createDiscordMessage(data)
     end
-    if config.githubEnabled then
+    if Config.githubEnabled then
         createGitHubIssue(data)
     end
-    if config.loggerEnabled then
+    if Config.loggerEnabled then
         lib.logger(source, 'TAM_BugReport', ("**Reported By**: %s | %s\n**Bug Description**: %s\n**Type**: %s\n**Severity**: %s\n**Expected Result**: %s\n**Actual Result**: %s\n**Steps to reproduce**: %s\n**Player Coords**: %s\n**Timestamp**: %s\n**In-game Time**: %s"):format(data.author, data.identifier, data.title, data.type, data.severity, data.expectedResult, data.actualResult, data.reproduce, data.coords, data.timeStamp, data.time))
     end
     rateLimit = true
-    SetTimeout(config.cooldown, function()
+    SetTimeout(Config.cooldown, function()
         rateLimit = false
     end)
 

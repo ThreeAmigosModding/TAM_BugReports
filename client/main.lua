@@ -5,7 +5,6 @@
 --]]------------------------------------------------------
 ---@diagnostic disable: cast-local-type
 local rateLimit = false
-local config = require 'data.config'
 
 --- Resets the NUI Focus
 local function resetNuiFocus()
@@ -75,17 +74,17 @@ RegisterNUICallback('submit', function(data, cb)
 
     rateLimit = true
     lib.notify({description = locale("notify_success_sent_report"), type = 'success', duration = 5000})
-    SetTimeout(config.cooldown, function()
+    SetTimeout(Config.cooldown, function()
         rateLimit = false
     end)
     cb({})
 end)
 
---- Registers the NUI callback to fetch the config data.
+--- Registers the NUI callback to fetch the Config data.
 ---@param _ nil Not used.
----@param cb function Callback function to return the data fetched from the config.
+---@param cb function Callback function to return the data fetched from the Config.
 RegisterNUICallback("getConfigData", function(_, cb)
-    local retData <const> = { severity = config.severity,  types = config.types}
+    local retData <const> = { severity = Config.severity,  types = Config.types}
     cb(retData)
 end)
 
@@ -96,11 +95,11 @@ RegisterCommand(locale("command_name"), function()
 end)
 TriggerEvent("chat:addSuggestion", "/" .. locale("command_name"), locale("command_help"))
 
-if config.keybind.enabled then
+if Config.keybind.enabled then
     lib.addKeybind({
         name = "bugreport",
         description = locale("keybind_description"),
-        defaultKey = config.keybind.defaultKey,
+        defaultKey = Config.keybind.defaultKey,
         onReleased = function()
             if rateLimit then lib.notify({description = locale('notify_error_ratelimited'), type = 'error', duration = 5000}) return end
             toggleBugReportUI(true)

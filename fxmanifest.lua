@@ -16,6 +16,7 @@ version "1.0.0"
 
 files {
     "data/**",
+    "locales/*.json",
     "web/build/index.html",
 	"web/build/**/*",
 }
@@ -30,7 +31,8 @@ dependencies {
 }
 
 shared_scripts {
-    "@ox_lib/init.lua"
+    "@ox_lib/init.lua",
+    "shared/main.lua"
 }
 
 client_scripts {
